@@ -1,15 +1,29 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:11-jre-slim
+# Step 1: Use Maven to build the application
+FROM maven:3.8.5-openjdk-11 AS build
 
-# Set the working directory
+# Step 2: Set the working directory inside the container
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
+# Step 3: Copy the application source code into the container
 COPY . /app
 
-# Compile the application (if necessary)
-RUN ./mvnw package
+# Step 4: Compile the application and package it as a JAR
+RUN mvn clean package
 
-# Run the application
-CMD ["java", "-jar", "target/java-calculator-1.0-SNAPSHOT.jar"]
+# Step 5: Use a smaller base image for running the application
+FROM openjdk:11-jre-slim
 
+# Step 6: Set the working directory inside the container
+WORKDIR /app
+
+# Step 7: Copy the JAR file from the build stage
+COPY --from=build /app/target/java-calculator-1.0-SNAPSHOT.jar /app/java-calculator.jar
+
+# Step 8: Specify the command to run the application
+CMD ["java", "-jar", "java-calculator.jar"]
+
+# Optional: Add metadata to the image
+LABEL org.opencontainers.image.source="https://github.com/ashravank/Java-calculator"
+LABEL org.opencontainers.image.revision="ea76e8a963e0d08683e0a1a3c5035fddfb301c43"
+LABEL org.opencontainers.image.created="2024-08-27T18:08:40Z"
+LABEL org.opencontainers.image.url="https://github.com/ashravank/Java-calculator"
