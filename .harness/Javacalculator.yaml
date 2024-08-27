@@ -44,9 +44,10 @@ pipeline:
                     command: mvn package
               - step:
                   type: BuildAndPushDockerRegistry
-                  name: BuildAndPushDockerRegistry_1
-                  identifier: BuildAndPushDockerRegistry_1
+                  name: Docker_build
+                  identifier: Docker_build
                   spec:
                     connectorRef: account.harnessImage
                     repo: shravankumara/java-calculator
-                    tags: <+input>
+                    tags:
+                      - latest
