@@ -50,4 +50,4 @@ pipeline:
                     connectorRef: Docker_connector
                     repo: shravankumara/java-calculator
                     tags:
-                      - latest
+                      - demo-1
