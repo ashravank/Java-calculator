@@ -7,8 +7,8 @@ WORKDIR /app
 # Step 3: Copy the application source code into the container
 COPY . /app
 
-# Step 4: Compile the application and package it as a JAR
-RUN mvn clean package
+# Step 4: Run unit tests and package the application
+RUN mvn clean test && mvn package
 
 # Step 5: Use a smaller base image for running the application
 FROM openjdk:11-jre-slim
