@@ -31,3 +31,20 @@ pipeline:
                   name: Run_1
                   identifier: Run_1
                   spec: {}
+              - step:
+                  type: Run
+                  name: Set up Env- Test
+                  identifier: Set_up_Env_Test
+                  spec:
+                    shell: Sh
+                    command: |-
+                      mvn clean install
+                      mvn test
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: account.harnessImage
+                    repo: shravankumara/java-calculator
+                    tags: <+input>
