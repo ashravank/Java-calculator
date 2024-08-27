@@ -30,16 +30,18 @@ pipeline:
                   type: Run
                   name: Run_1
                   identifier: Run_1
-                  spec: {}
+                  spec:
+                    shell: Sh
+                    command: |-
+                      mvn compile
+                      mvn test
               - step:
                   type: Run
                   name: Set up Env- Test
                   identifier: Set_up_Env_Test
                   spec:
                     shell: Sh
-                    command: |-
-                      mvn clean install
-                      mvn test
+                    command: mvn package
               - step:
                   type: BuildAndPushDockerRegistry
                   name: BuildAndPushDockerRegistry_1
