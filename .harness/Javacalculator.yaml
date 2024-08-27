@@ -47,7 +47,7 @@ pipeline:
                   name: Docker_build
                   identifier: Docker_build
                   spec:
-                    connectorRef: Docker_connector
+                    connectorRef: account.harnessImage
                     repo: shravankumara/java-calculator
                     tags:
                       - latest
